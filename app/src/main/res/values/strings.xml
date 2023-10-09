@@ -5,4 +5,15 @@
     <string name="msg_unauthorized">Sorry, you are unauthorized</string>
     <string name="title_retry">Retry</string>
     <string name="title_reload">Reload</string>
+    <string name="msg_needed_gps">GPS will help more to detect your location to get the weather status</string>
+    <string name="title_open_gps">Turn on location</string>
+    <string name="msg_needed_location_permissions">Location permission is required to get the weather status</string>
+    <string name="msg_request_permission">Request permission</string>
+    <string name="msg_undetectable_location">Sorry can\'t detect your location</string>
+    <string name="title_try_again">Try again</string>
+    <string name="title_today">Today %1$s</string>
+    <string name="title_presure_unit">hpa</string>
+    <string name="title_humadity_unit">hpa</string>
+    <string name="title_wind_unit">hpa</string>
+    <string name="msg_weather">%1$s°/%2$s° Feels Like %3$s°</string>
 </resources>

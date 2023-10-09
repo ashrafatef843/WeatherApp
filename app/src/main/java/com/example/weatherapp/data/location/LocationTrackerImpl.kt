@@ -1,29 +1,19 @@
-package com.example.weatherapp.data
+package com.example.weatherapp.data.location
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationManager
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.FusedLocationProviderClient
+import com.example.weatherapp.domain.location.LocationTracker
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
-import javax.inject.Singleton
-
-interface LocationTracker {
-    suspend fun getCurrentLocation(): LocationStatus
-}
 
 @ExperimentalCoroutinesApi
 class LocationTrackerImpl @Inject constructor(
@@ -45,7 +35,12 @@ class LocationTrackerImpl @Inject constructor(
             if (location == null)
                 LocationStatus.LocationUndetectable
             else
-                LocationStatus.LocationDetected(location)
+                LocationStatus.LocationDetected(
+                    Location(
+                        location.latitude,
+                        location.longitude
+                    )
+                )
         }
     }
 
@@ -53,7 +48,11 @@ class LocationTrackerImpl @Inject constructor(
         ContextCompat.checkSelfPermission(
             application,
             Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_DENIED
+        ) == PackageManager.PERMISSION_DENIED ||
+                ContextCompat.checkSelfPermission(
+                    application,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_DENIED
 
     private fun isLocationProviderDisabled(): Boolean {
         val locationManager =
@@ -77,3 +76,8 @@ sealed class LocationStatus {
 
     object LocationUndetectable : LocationStatus()
 }
+
+data class Location(
+    val lat: Double,
+    val lng: Double
+)

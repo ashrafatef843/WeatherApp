@@ -1,13 +1,9 @@
-package com.example.weatherapp.data.di
+package com.example.weatherapp.data.location
 
-import android.app.Application
-import com.example.weatherapp.data.LocationTracker
-import com.example.weatherapp.data.LocationTrackerImpl
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.example.weatherapp.data.location.LocationTrackerImpl
+import com.example.weatherapp.domain.location.LocationTracker
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi

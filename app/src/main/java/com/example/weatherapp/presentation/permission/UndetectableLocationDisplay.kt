@@ -1,6 +1,7 @@
-package com.example.weatherapp.permission
+package com.example.weatherapp.presentation.permission
 
-import com.example.weatherapp.R
+import android.Manifest
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,30 +19,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionState
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
-import com.google.accompanist.permissions.shouldShowRationale
+import com.example.weatherapp.R
 
 @Composable
-@OptIn(ExperimentalPermissionsApi::class)
-fun LocationPermissionDisplay(onPermissionGranted: () -> Unit) {
-    val locationPermissionState = rememberPermissionState(
-            android.Manifest.permission.ACCESS_COARSE_LOCATION
-    )
-    if (locationPermissionState.status.isGranted) {
-        onPermissionGranted.invoke()
-    } else {
-        PermissionsRevoked(locationPermissionState)
-    }
-}
-
-@OptIn(ExperimentalPermissionsApi::class)
-@Composable
-fun PermissionsRevoked(locationPermissionState: PermissionState) {
+fun UndetectableLocationDisplay(onRetry: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -63,15 +47,13 @@ fun PermissionsRevoked(locationPermissionState: PermissionState) {
                 .align(Alignment.CenterHorizontally),
             color = Color.White,
             textAlign = TextAlign.Center,
-            text = if (locationPermissionState.status.shouldShowRationale) {
-                "The location is important for this app. Please grant the permission."
-            } else {
-                "Location permission required for feature to be available Please grant the permission"
-            }
+            text = stringResource(R.string.msg_undetectable_location)
         )
         Spacer(modifier = Modifier.height(10.dp))
-        Button(onClick = { locationPermissionState.launchPermissionRequest() }) {
-            Text("Request permission")
+        Button(onClick = {
+            onRetry.invoke()
+        }) {
+            Text(stringResource(R.string.title_try_again))
         }
     }
 }
