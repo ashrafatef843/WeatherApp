@@ -1,4 +1,4 @@
-package com.example.weatherapp.permission
+package com.example.weatherapp.presentation.permission
 
 import android.app.Activity
 import android.content.Context
@@ -22,8 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.weatherapp.R
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -55,7 +57,7 @@ fun LocationSettingDisplay(onLocationSettingEnabled: () -> Unit) {
             modifier = Modifier.wrapContentSize(),
             textAlign = TextAlign.Center,
             color = Color.White,
-            text = "GPS will help more to detect your location to get the weather status"
+            text = stringResource(R.string.msg_needed_gps)
         )
         Spacer(modifier = Modifier.height(10.dp))
         Button(
@@ -63,7 +65,7 @@ fun LocationSettingDisplay(onLocationSettingEnabled: () -> Unit) {
                 openLocationService(context, settingResultRequest, onLocationSettingEnabled)
             },
         ) {
-            Text("Turn on location")
+            Text(stringResource(R.string.title_open_gps))
         }
     }
 }
