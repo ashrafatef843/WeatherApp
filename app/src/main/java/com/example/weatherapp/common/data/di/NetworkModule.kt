@@ -1,6 +1,7 @@
 package com.example.weatherapp.common.data.di
 
 import com.example.weatherapp.BuildConfig
+import com.example.weatherapp.common.const.BASE_URL
 import com.example.weatherapp.common.data.apis.WeatherApis
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -21,7 +22,6 @@ import javax.inject.Singleton
 object NetworkModule {
 
     private const val TIMEOUT = 30L
-    private const val BASE_URL = "https://api.openweathermap.org/"
 
     @Provides
     @Singleton
