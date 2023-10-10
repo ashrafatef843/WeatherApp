@@ -26,7 +26,6 @@ Clean MVI is the architecture pattern of the app.
 # Libraries
 * Coroutines
 * Compose
-* 
 * Retrofit
 * ViewModel
 * Hilt
