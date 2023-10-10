@@ -12,8 +12,8 @@
     <string name="msg_undetectable_location">Sorry can\'t detect your location</string>
     <string name="title_try_again">Try again</string>
     <string name="title_today">Today %1$s</string>
-    <string name="title_presure_unit">hpa</string>
-    <string name="title_humadity_unit">hpa</string>
-    <string name="title_wind_unit">hpa</string>
+    <string name="title_pressure_unit">hpa</string>
+    <string name="title_humidity_unit">%</string>
+    <string name="title_wind_unit">m/s</string>
     <string name="msg_weather">%1$s°/%2$s° Feels Like %3$s°</string>
 </resources>

@@ -105,12 +105,12 @@ fun WeatherCard(currentWeather: CurrentWeather, onRefresh: ()-> Unit) {
                 ) {
                     WeatherDataDisplay(
                         value = currentWeather.main.pressure,
-                        unit = stringResource(R.string.title_presure_unit),
+                        unit = stringResource(R.string.title_pressure_unit),
                         painter = painterResource(id = R.drawable.ic_pressure)
                     )
                     WeatherDataDisplay(
                         value = currentWeather.main.humidity,
-                        unit = stringResource(R.string.title_humadity_unit),
+                        unit = stringResource(R.string.title_humidity_unit),
                         painter = painterResource(id = R.drawable.ic_drop)
                     )
                     WeatherDataDisplay(
