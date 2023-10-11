@@ -3,9 +3,7 @@ package com.example.weatherapp.presentation.permission
 import android.app.Activity
 import android.content.Context
 import android.content.IntentSender
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +16,10 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,6 +47,14 @@ fun LocationSettingDisplay(onLocationSettingEnabled: () -> Unit) {
         if (activityResult.resultCode == Activity.RESULT_OK)
             onLocationSettingEnabled.invoke()
     }
+    var launchLocationRequest by remember {
+        mutableStateOf(false)
+    }
+    if (launchLocationRequest) {
+        openLocationService(context, onLocationSettingEnabled) {
+            settingResultRequest.launch(it)
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -62,25 +72,23 @@ fun LocationSettingDisplay(onLocationSettingEnabled: () -> Unit) {
         Spacer(modifier = Modifier.height(10.dp))
         Button(
             onClick = {
-                openLocationService(context, settingResultRequest, onLocationSettingEnabled)
+               launchLocationRequest = true
             },
         ) {
-            Text(stringResource(R.string.title_open_gps))
+            Text(stringResource(R.string.title_open_gps), color = Color.White)
         }
     }
 }
 
-
 fun openLocationService(
     context: Context,
-    settingResultRequest: ManagedActivityResultLauncher<IntentSenderRequest, ActivityResult>,
-    onLocationSettingEnabled: () -> Unit
+    onLocationSettingEnabled: () -> Unit,
+    makeRequest: (intentSenderRequest: IntentSenderRequest) -> Unit
 ) {
     val client: SettingsClient = LocationServices.getSettingsClient(context)
     val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000)
     val locationSettingsRequest =
         LocationSettingsRequest.Builder().addLocationRequest(locationRequest.build())
-
     val gpsSettingTask: Task<LocationSettingsResponse> =
         client.checkLocationSettings(locationSettingsRequest.build())
 
@@ -92,7 +100,7 @@ fun openLocationService(
             try {
                 val intentSenderRequest =
                     IntentSenderRequest.Builder(exception.resolution).build()
-                settingResultRequest.launch(intentSenderRequest)
+                makeRequest(intentSenderRequest)
             } catch (sendEx: IntentSender.SendIntentException) {
                 // ignore here
             }

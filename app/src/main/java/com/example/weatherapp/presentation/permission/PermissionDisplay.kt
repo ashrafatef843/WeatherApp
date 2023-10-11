@@ -96,7 +96,7 @@ fun PermissionsRevoked(
                 )
             )
         }) {
-            Text(stringResource(R.string.msg_request_permission))
+            Text(stringResource(R.string.msg_request_permission), color = Color.White)
         }
     }
 }

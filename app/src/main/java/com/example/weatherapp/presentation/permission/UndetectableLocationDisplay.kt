@@ -53,7 +53,7 @@ fun UndetectableLocationDisplay(onRetry: () -> Unit) {
         Button(onClick = {
             onRetry.invoke()
         }) {
-            Text(stringResource(R.string.title_try_again))
+            Text(stringResource(R.string.title_try_again), color = Color.White)
         }
     }
 }
